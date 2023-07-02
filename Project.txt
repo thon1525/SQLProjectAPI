@@ -1,0 +1,141 @@
+CREATE TABLE Stock_out_Device(
+    name_stock_out_id INT NOT NULL,
+    nameDevice_stock_out VARCHAR(50) NOT NULL,
+    Broken_Device VARCHAR(50) NOT NULL,
+    Date_Stock_out_device DATE NOT NULL,
+    PRIMARY KEY(name_stock_out_id)
+); CREATE TABLE table_stock_out_staff(
+    staff_leave_id INT NOT NULL,
+    name_staff INT NOT NULL,
+    sex_staff INT NOT NULL,
+    name_position_staff INT NOT NULL,
+    date_stock_out_staff INT NOT NULL,
+    PRIMARY KEY(staff_leave_id)
+); CREATE TABLE table_stock_out_student(
+    table_student_stock_out_id INT NOT NULL,
+    name_student_stock_out INT NOT NULL,
+    sex_student INT NOT NULL,
+    date_student_stock_out INT NOT NULL,
+    PRIMARY KEY(table_student_stock_out_id)
+); CREATE TABLE table_stock_out_Electric(
+    Electric_stock_out_id INT NOT NULL,
+    name_Electric_stock_out INT NOT NULL,
+    type_Electric_stock_out INT NOT NULL,
+    date_Electric_stock_out INT NOT NULL,
+    PRIMARY KEY(Electric_stock_out_id)
+); CREATE TABLE table_stock_out_teacher(
+    teacher_exchange_id INT NOT NULL,
+    name_teacher VARCHAR(50) NOT NULL,
+    sex_teacher VARCHAR(50) NOT NULL,
+    position_teacher VARCHAR(50) NOT NULL,
+    date_stock_our_teacher DATE NOT NULL,
+    PRIMARY KEY(teacher_exchange_id)
+); CREATE TABLE table_stock_out(
+    selltexbook_id INT NOT NULL,
+    name_textbook VARCHAR(50) NOT NULL,
+    price_textbook INT NOT NULL,
+    facultyname VARCHAR(50) NOT NULL,
+    major VARCHAR(50) NOT NULL,
+    date_stock_out DATE NOT NULL,
+    PRIMARY KEY(selltexbook_id)
+); CREATE TABLE table_stock_slidebook(
+    slidebook_id_stock_out_id INT NOT NULL,
+    name_slidebook VARCHAR(50) NOT NULL,
+    price_slidebook INT NOT NULL,
+    facultyname VARCHAR(50) NOT NULL,
+    major VARCHAR(50) NOT NULL,
+    date_stock_out_slidebook DATE NOT NULL,
+    PRIMARY KEY(slidebook_id_stock_out_id)
+); CREATE TABLE tableslidebook(
+    slidebook_id INT NOT NULL,
+    nameslidebook VARCHAR(50) NOT NULL,
+    priceslidebook INT NOT NULL,
+    DateSlidebook DATE NOT NULL,
+    NameSlidebook_stock_in VARCHAR(50) NOT NULL,
+    slidebook_id_stock_out_id INT NOT NULL,
+    PRIMARY KEY(slidebook_id),
+    FOREIGN KEY(slidebook_id_stock_out_id) REFERENCES table_stock_slidebook(slidebook_id_stock_out_id)
+); CREATE TABLE TypeTextbook(
+    textbook_id INT NOT NULL,
+    nameTextbook VARCHAR(50) NOT NULL,
+    pricetextbook INT NOT NULL,
+    DateTextbook DATE NOT NULL,
+    nameTextbook_StockIn VARCHAR(50) NOT NULL,
+    selltexbook_id INT NOT NULL,
+    PRIMARY KEY(textbook_id),
+    FOREIGN KEY(selltexbook_id) REFERENCES table_stock_out(selltexbook_id)
+); CREATE TABLE table_Electric_(
+    table_stock_in_Electric__id INT NOT NULL,
+    name_Electric_ VARCHAR(50) NOT NULL,
+    PriceElectric_ INT NOT NULL,
+    DateElectric_ DATE NOT NULL,
+    NameElectric_stockIn VARCHAR(50) NOT NULL,
+    Electric_stock_out_id INT NOT NULL,
+    PRIMARY KEY(table_stock_in_Electric__id),
+    FOREIGN KEY(Electric_stock_out_id) REFERENCES table_stock_out_Electric(Electric_stock_out_id)
+); CREATE TABLE table_device(
+    table_device_technology_id INT NOT NULL,
+    name_device VARCHAR(50) NOT NULL,
+    price_device INT NOT NULL,
+    DateDevice DATE NOT NULL,
+    StockDevice VARCHAR(50) NOT NULL,
+    softeware VARCHAR(50) NOT NULL,
+    name_stock_out_id INT NOT NULL,
+    PRIMARY KEY(table_device_technology_id),
+    FOREIGN KEY(name_stock_out_id) REFERENCES Stock_out_Device(name_stock_out_id)
+); CREATE TABLE table_staff(
+    staff_Stock_in_id INT NOT NULL,
+    name_Staff INT NOT NULL,
+    sex_staff INT NOT NULL,
+    posintion_Staff INT NOT NULL,
+    salary_staff INT NOT NULL,
+    Date_staff INT NOT NULL,
+    staff_leave_id INT NOT NULL,
+    PRIMARY KEY(staff_Stock_in_id),
+    FOREIGN KEY(staff_leave_id) REFERENCES table_stock_out_staff(staff_leave_id)
+); CREATE TABLE table_student(
+    manyStudent_Stock_In_id INT NOT NULL,
+    name_student INT NOT NULL,
+    sex INT NOT NULL,
+    facultyname INT NOT NULL,
+    major INT NOT NULL,
+    Date_Student INT NOT NULL,
+    table_student_stock_out_id INT NOT NULL,
+    PRIMARY KEY(manyStudent_Stock_In_id),
+    FOREIGN KEY(table_student_stock_out_id) REFERENCES table_stock_out_student(table_student_stock_out_id)
+); CREATE TABLE table_teacher(
+    Teacher_Stock_in_id INT NOT NULL,
+    name_teacher VARCHAR(50) NOT NULL,
+    sex_teacher VARCHAR(50) NOT NULL,
+    age_teacher VARCHAR(50) NOT NULL,
+    posintion_teacher VARCHAR(50) NOT NULL,
+    Salary_teacher INT NOT NULL,
+    Date_teacher DATE NOT NULL,
+    teacher_exchange_id INT NOT NULL,
+    PRIMARY KEY(Teacher_Stock_in_id),
+    FOREIGN KEY(teacher_exchange_id) REFERENCES table_stock_out_teacher(teacher_exchange_id)
+); CREATE TABLE type_book(
+    table_stock_in_book_id INT NOT NULL,
+    textbook_id INT NOT NULL,
+    slidebook_id INT NOT NULL,
+    PRIMARY KEY(table_stock_in_book_id),
+    FOREIGN KEY(slidebook_id) REFERENCES tableslidebook(slidebook_id),
+    FOREIGN KEY(textbook_id) REFERENCES TypeTextbook(textbook_id)
+); CREATE TABLE table_Stock_in(
+    table_device_technology_id INT NOT NULL,
+    id_Stock_id INT NOT NULL,
+    name_stock VARCHAR(50) NOT NULL,
+    table_stock_in_Electric__id INT NOT NULL,
+    table_stock_in_book_id INT NOT NULL,
+    staff_Stock_in_id INT NOT NULL,
+    manyStudent_Stock_In_id INT NOT NULL,
+    Teacher_Stock_in_id INT NOT NULL,
+    table_device_technology_id INT NOT NULL,
+    PRIMARY KEY(id_Stock_id),
+    FOREIGN KEY(table_stock_in_book_id) REFERENCES type_book(table_stock_in_book_id),
+    FOREIGN KEY(table_stock_in_Electric__id) REFERENCES table_Electric_(table_stock_in_Electric__id),
+    FOREIGN KEY(table_device_technology_id) REFERENCES table_device(table_device_technology_id),
+    FOREIGN KEY(staff_Stock_in_id) REFERENCES table_staff(staff_Stock_in_id),
+    FOREIGN KEY(manyStudent_Stock_In_id) REFERENCES table_student(manyStudent_Stock_In_id),
+    FOREIGN KEY(Teacher_Stock_in_id) REFERENCES table_teacher(Teacher_Stock_in_id)
+);
